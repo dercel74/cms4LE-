@@ -1,0 +1,31 @@
+// Datei: /data/schema.sql (UID: b7d3f2c1)
+// Status: 16.02.2025 14:05 (MEZ)
+
+// SQL-Schema für die Erstellung der notwendigen Tabellen
+
+CREATE TABLE IF NOT EXISTS `users` (
+    `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
+    `username` VARCHAR(50) NOT NULL UNIQUE,
+    `password` VARCHAR(255) NOT NULL,
+    `email` VARCHAR(100) NOT NULL UNIQUE,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS `forums` (
+    `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
+    `title` VARCHAR(100) NOT NULL,
+    `description` TEXT NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS `posts` (
+    `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
+    `forum_id` INT(11) NOT NULL,
+    `user_id` INT(11) NOT NULL,
+    `title` VARCHAR(150) NOT NULL,
+    `content` TEXT NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (`forum_id`) REFERENCES `forums`(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
+);

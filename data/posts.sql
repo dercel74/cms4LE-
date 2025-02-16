@@ -1,0 +1,7 @@
+CREATE TABLE posts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    forum_id INT NOT NULL,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (forum_id) REFERENCES forums(id) ON DELETE CASCADE
+);
